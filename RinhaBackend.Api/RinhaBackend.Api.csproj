@@ -1,0 +1,33 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Endpoints\Clientes\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Remove="Endpoints\Clientes\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Endpoints\Clientes\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="Endpoints\Clientes\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\RinhaBackend.Services\RinhaBackend.Services.csproj" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <InternalsVisibleTo Include="RinhaBackend.Tests" />
+  </ItemGroup>
+
+</Project>
