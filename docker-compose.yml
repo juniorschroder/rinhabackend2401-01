@@ -1,0 +1,62 @@
+version: "3.5"
+
+services:
+  api01: &api
+    image: juniorschroder/rinhabackend2024q1:1.0.2
+    hostname: api01
+    environment: &env
+      ConnectionStrings__DefaultConnection: Host=db;Port=5432;Database=rinha;Username=postgres;Password=123;Pooling=true;Minimum Pool Size=50;Maximum Pool Size=2048;Multiplexing=true;Timeout=15;Command Timeout=15;Cancellation Timeout=-1;No Reset On Close=true;Max Auto Prepare=20;Auto Prepare Min Usages=1;
+    ports:
+      - "8081:8080"
+    depends_on:
+      - db
+    deploy:
+      resources:
+        limits:
+          cpus: "0.50"
+          memory: "193MB"
+
+  api02:
+    <<: *api
+    hostname: api02
+    environment:
+      <<: *env
+    ports:
+      - "8082:8080"
+  
+  nginx:
+    image: nginx:latest
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+    depends_on:
+      - api01
+      - api02
+    ports:
+      - "9999:9999"
+    deploy:
+      resources:
+        limits:
+          cpus: "0.20"
+          memory: "14MB"
+
+  db:
+    image: postgres:latest
+    hostname: db
+    environment:
+      - POSTGRES_PASSWORD=123
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=rinha
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./script.sql:/docker-entrypoint-initdb.d/script.sql
+    deploy:
+      resources:
+        limits:
+          cpus: "0.30"
+          memory: "150MB"
+
+networks:
+  default:
+    driver: bridge
+    name: rinha-backend-2024q1

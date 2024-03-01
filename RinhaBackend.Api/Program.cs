@@ -1,4 +1,5 @@
 using System.Text.Json;
+using Microsoft.AspNetCore.Http.Timeouts;
 using Microsoft.EntityFrameworkCore;
 using RinhaBackend.Api.Endpoints;
 using RinhaBackend.Api.Extensions;
@@ -17,6 +18,9 @@ builder.Services.ConfigureHttpJsonOptions(opt =>
 
 builder.Services.AddRepositories();
 builder.Services.AddServices();
+
+builder.Services.AddRequestTimeouts(options => options.DefaultPolicy = 
+    new RequestTimeoutPolicy { Timeout = TimeSpan.FromSeconds(60) });
 
 var app = builder.Build();
 

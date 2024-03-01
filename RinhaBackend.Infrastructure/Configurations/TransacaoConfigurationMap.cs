@@ -12,7 +12,7 @@ public class TransacaoConfigurationMap : IEntityTypeConfiguration<Transacao>
 
         builder.HasKey(p => p.Id);
 
-        builder.Property(p => p.Id).IsRequired();
+        builder.Property(p => p.Id).HasColumnName("id").IsRequired();
         builder.Property(p => p.Valor).HasColumnName("valor").IsRequired();
         builder.Property(p => p.ClienteId).HasColumnName("cliente_id").IsRequired();
         builder.Property(p => p.Descricao).HasColumnName("descricao").HasMaxLength(10).IsRequired();

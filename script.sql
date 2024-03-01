@@ -38,3 +38,11 @@ CREATE TRIGGER TBI_atualiza_saldo_cliente
     BEFORE INSERT ON transacao
     FOR EACH ROW
     EXECUTE FUNCTION atualiza_saldo();
+
+INSERT INTO public.cliente(id, limite)
+VALUES
+    (1, 1000 * 100),
+    (2, 800 * 100),
+    (3, 10000 * 100),
+    (4, 100000 * 100),
+    (5, 5000 * 100);
